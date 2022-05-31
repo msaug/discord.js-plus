@@ -158,8 +158,8 @@ declare module 'discord.js-plus' {
     public deleted: boolean;
     public id: Snowflake;
     public type: keyof typeof ChannelType;
-    public delete(reason?: string): Promise<this>;
-    public fetch(): Promise<this>;
+    public delete(reason?: string): Promise<ChannelTypes>;
+    public fetch(): Promise<ChannelTypes>;
     public toString(): string;
   }
 
@@ -565,7 +565,7 @@ declare module 'discord.js-plus' {
     public recipient: User;
     public readonly partial: false;
     public type: 'dm';
-    public fetch(): Promise<this>;
+    public fetch(): Promise<DMChannel>;
   }
 
   export class Emoji extends Base {
@@ -585,7 +585,7 @@ declare module 'discord.js-plus' {
   export class Guild extends Base {
     constructor(client: Client, data: object);
     private _sortedRoles(): Collection<Snowflake, Role>;
-    private _sortedChannels(channel: Channel): Collection<Snowflake, GuildChannel>;
+    private _sortedChannels(channel: Channel): Collection<Snowflake, GuildChannelTypes>;
     private _memberSpeakUpdate(user: Snowflake, speaking: boolean): void;
 
     public readonly afkChannel: VoiceChannel | null;
@@ -1840,7 +1840,7 @@ declare module 'discord.js-plus' {
 
   //#region Managers
 
-  export class ChannelManager extends BaseManager<Snowflake, ChannelType, ChannelResolvable> {
+  export class ChannelManager extends BaseManager<Snowflake, ChannelTypes, ChannelResolvable> {
     constructor(client: Client, iterable: Iterable<any>);
     public fetch(id: Snowflake, cache?: boolean): Promise<ChannelTypes>;
   }
