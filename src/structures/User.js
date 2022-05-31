@@ -268,13 +268,24 @@ class User extends Base {
   }
 
   /**
-   * Send a friend request for this user
+   * Confirm a friend request for this user
    * @returns {Promise<User>}
    */
-  addFreind() {
+  acceptFriend() {
     return this.client.api
       .users('@me')
       .relationships[this.id].put({ data: { type: 1 } })
+      .then(_ => _);
+  }
+
+  /**
+   * Send a friend request for this user
+   * @returns {Promise<User>}
+   */
+  addFriend() {
+    return this.client.api
+      .users('@me')
+      .relationships[this.id].put({ data: { type: 4 } })
       .then(_ => _);
   }
   /**
