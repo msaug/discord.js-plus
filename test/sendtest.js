@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch-commonjs');
 const { owner, token } = require('./auth.js');
 const Discord = require('../src');
 

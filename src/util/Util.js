@@ -1,7 +1,7 @@
 'use strict';
 
 const { parse } = require('path');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch-commonjs');
 const { Colors, DefaultOptions, Endpoints } = require('./Constants');
 const { Error: DiscordError, RangeError, TypeError } = require('../errors');
 const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);

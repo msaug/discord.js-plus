@@ -9,7 +9,7 @@ declare enum ChannelType {
   unknown = 7,
 }
 
-declare module 'discord.js' {
+declare module 'discord.js-plus' {
   import BaseCollection from '@discordjs/collection';
   import { ChildProcess } from 'child_process';
   import { EventEmitter } from 'events';
@@ -222,10 +222,10 @@ declare module 'discord.js' {
   export class ClientUser extends User {
     public mfaEnabled: boolean;
     public verified: boolean;
-	public readonly friends: Collection<Snowflake, Relationship>;
-	public readonly blockList: Collection<Snowflake, Relationship>;
+    public readonly friends: Collection<Snowflake, Relationship>;
+    public readonly blockList: Collection<Snowflake, Relationship>;
     public setActivity(options?: ActivityOptions): Promise<Presence>;
-	public setActivity(name: string, options?: ActivityOptions): Promise<Presence>;
+    public setActivity(name: string, options?: ActivityOptions): Promise<Presence>;
     public setAFK(afk: boolean): Promise<Presence>;
     public setAvatar(avatar: BufferResolvable | Base64Resolvable): Promise<ClientUser>;
     public setPresence(data: PresenceData): Promise<Presence>;
@@ -1484,9 +1484,9 @@ declare module 'discord.js' {
     public id: Snowflake;
     public lastMessageID: Snowflake | null;
     public locale?: string;
-	public readonly partial: false;
-	public relationship: Relationship;
-	public blocked: boolean;
+    public readonly partial: false;
+    public relationship: Relationship;
+    public blocked: boolean;
     public readonly presence: Presence;
     public readonly friend: boolean;
     public system?: boolean;
@@ -1501,10 +1501,10 @@ declare module 'discord.js' {
     public fetchFlags(): Promise<UserFlags>;
     public toString(): string;
     public typingDurationIn(channel: ChannelResolvable): number;
-	public block(): Promise<User>;
-	public unblock(): Promise<User>;
-	public removeFriend(): Promise<User>;
-	public addFriend(): Promise<User>;
+    public block(): Promise<User>;
+    public unblock(): Promise<User>;
+    public removeFriend(): Promise<User>;
+    public addFriend(): Promise<User>;
     public typingIn(channel: ChannelResolvable): boolean;
     public typingSinceIn(channel: ChannelResolvable): Date;
   }
@@ -1516,9 +1516,9 @@ declare module 'discord.js' {
 
   export class Relationship extends Base {
     constructor(client: Client, data: object);
-	public user: User;
-	public id: string;
-	public type: 0 | 1 | 2 | 3 | 4;
+    public user: User;
+    public id: string;
+    public type: 0 | 1 | 2 | 3 | 4;
   }
 
   export class Util {
@@ -1840,9 +1840,9 @@ declare module 'discord.js' {
 
   //#region Managers
 
-  export class ChannelManager extends BaseManager<Snowflake, Channel, ChannelResolvable> {
+  export class ChannelManager extends BaseManager<Snowflake, ChannelType, ChannelResolvable> {
     constructor(client: Client, iterable: Iterable<any>);
-    public fetch(id: Snowflake, cache?: boolean): Promise<Channel>;
+    public fetch(id: Snowflake, cache?: boolean): Promise<ChannelTypes>;
   }
 
   export abstract class BaseManager<K, Holds, R> {
@@ -1955,11 +1955,10 @@ declare module 'discord.js' {
     public removeAll(): Promise<Message>;
   }
   export class RelationshipManager extends BaseManager<Snowflake, Relationship, RelationshipResolvable> {
-	constructor(client: Client, iterable?: Iterable<any>);
-	presences: PresenceManager;
+    constructor(client: Client, iterable?: Iterable<any>);
+    presences: PresenceManager;
     public fetchAll(): Promise<Collection<Snowflake, Relationship>>;
   }
-
 
   export class ReactionUserManager extends BaseManager<Snowflake, User, UserResolvable> {
     constructor(client: Client, iterable: Iterable<any> | undefined, reaction: MessageReaction);
@@ -2199,6 +2198,9 @@ declare module 'discord.js' {
   }
 
   type ChannelResolvable = Channel | Snowflake;
+  type ChannelTypes = DMChannel | CategoryChannel | NewsChannel | StoreChannel | TextChannel | VoiceChannel;
+  type GuildChannelTypes = CategoryChannel | NewsChannel | StoreChannel | TextChannel | VoiceChannel;
+  type TextBasedChannelTypes = DMChannel | NewsChannel | TextChannel;
 
   interface ClientApplicationAsset {
     name: string;
@@ -2253,10 +2255,10 @@ declare module 'discord.js' {
     roleDelete: [Role];
     roleUpdate: [Role, Role];
     typingStart: [Channel | PartialDMChannel, User | PartialUser];
-	userUpdate: [User | PartialUser, User | PartialUser];
-	relationshipAdd: [Relationship, Relationship];
-	relationshipRemove: [Relationship];
-	relationshipUpdate: [Relationship, Relationship];
+    userUpdate: [User | PartialUser, User | PartialUser];
+    relationshipAdd: [Relationship, Relationship];
+    relationshipRemove: [Relationship];
+    relationshipUpdate: [Relationship, Relationship];
     voiceStateUpdate: [VoiceState, VoiceState];
     webhookUpdate: [TextChannel];
     shardDisconnect: [CloseEvent, number];
@@ -3100,9 +3102,9 @@ declare module 'discord.js' {
     | 'GUILD_BAN_REMOVE'
     | 'GUILD_EMOJIS_UPDATE'
     | 'GUILD_INTEGRATIONS_UPDATE'
-	| 'CHANNEL_CREATE'
-	| 'RELATIONSHIP_ADD'
-	| 'RELATIONSHIP_REMOVE'
+    | 'CHANNEL_CREATE'
+    | 'RELATIONSHIP_ADD'
+    | 'RELATIONSHIP_REMOVE'
     | 'CHANNEL_DELETE'
     | 'CHANNEL_UPDATE'
     | 'CHANNEL_PINS_UPDATE'
